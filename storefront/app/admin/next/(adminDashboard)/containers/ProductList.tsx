@@ -164,7 +164,7 @@ const ProductList = (props: Props) => {
                               Active
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-x-1 rounded-full bg-red-500/10 px-1.5 py-1 text-xs font-medium text-red-600">
+                            <span className="inline-flex items-center gap-x-1 rounded-full bg-yellow-500/10 px-1.5 py-1 text-xs font-medium text-yellow-600">
                               <MdPendingActions />
                               Pending
                             </span>
