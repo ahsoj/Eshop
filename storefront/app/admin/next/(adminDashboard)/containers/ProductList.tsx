@@ -5,6 +5,7 @@ import { MdPendingActions, MdVerified } from "react-icons/md";
 import twmesh from "../../../../../utils/twmesh";
 import { MdDelete } from "react-icons/md";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { GoSearch } from "react-icons/go";
 
 type Props = {};
 
@@ -87,7 +88,26 @@ const ProductList = (props: Props) => {
                     All Product lists here.
                   </p>
                 </div>
-
+                <div className="sm:col-span-1">
+                  <label
+                    htmlFor="hs-as-table-product-review-search"
+                    className="sr-only"
+                  >
+                    Search
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="hs-as-table-product-review-search"
+                      name="hs-as-table-product-review-search"
+                      className="block w-full rounded-lg border border-gray-200 px-3 py-2 ps-11 text-sm outline-none focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                      placeholder="Search Product"
+                    />
+                    <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4">
+                      <GoSearch className="h-4 w-4 text-gray-600 dark:text-white" />
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <div className="inline-flex gap-x-2">
                     <Link
