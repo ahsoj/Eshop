@@ -1,15 +1,22 @@
+"use client";
+
 import React from "react";
 import NavBar from "./Nav";
+import { usePathname } from "next/navigation";
 
 type HeaderProps = {};
 
-const Header: React.FC<{ props?: HeaderProps;}> = ({
-  ...props
-}) => {
+const Header: React.FC<{ props?: HeaderProps }> = ({ ...props }) => {
+  const pathname = usePathname();
+
   return (
-  <header>
-    <NavBar />
-  </header>
+    <>
+      {!pathname.startsWith("/admin") && (
+        <header>
+          <NavBar />
+        </header>
+      )}
+    </>
   );
 };
 

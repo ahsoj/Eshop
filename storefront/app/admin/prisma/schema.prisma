@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  if       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique @default("mkeyasuc@gmail.com")
+  password String @default("$2b$10$5BehDzpHwbm2nOeWJAcCwewnUyHjSArLrFCC0PA23S8yXCNq7VR.W") // hashed=> )P(O*I&U^Y5t
+  role     Role   @default(ADMIN)
+}
+
+model User {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String  @unique
+  password String
+  phone    String?
+  order    Order[]
+}
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @default("Product Name")
+  slug        String
+  price       Float    @default(10)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  categoryId  String   @db.ObjectId
+  image       Images[]
+  order       Order[]
+  category    Category @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@index([name, createdAt(sort: Desc)])
+  @@map("products")
+}
+
+model Category {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String    @default("Category Name")
+  products Product[]
+
+  @@map("categories")
+}
+
+model Images {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  image     String?
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@map("product_images")
+}
+
+model Order {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  productId   String   @db.ObjectId
+  quantity    Int
+  total_price Float
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
